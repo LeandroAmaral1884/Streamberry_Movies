@@ -1,12 +1,14 @@
 ﻿class SelectOptions
 {
+  
     static void Main()
     {
 
-      
+        Console.Clear();
 
         while (true)
         {
+           
             Console.WriteLine("==== Streamberry ====");
             Console.WriteLine("");
 
@@ -19,17 +21,17 @@
             Console.WriteLine("4. Deletar");
             Console.WriteLine("5. Pesquisar");
             Console.WriteLine("6. Sair");
+            Console.WriteLine("ENTER limpar tela");
             Console.WriteLine("");
-
+           
             int option;
+          
             if (!int.TryParse(Console.ReadLine(), out option))
             {
-                Console.WriteLine("");
-                Console.WriteLine("Opção inválida,digite um número!!!");
-                Console.WriteLine("");
+                Console.Clear();
                 continue;
             }
-
+         
             switch (option)
             {
                 case 1:
@@ -51,8 +53,10 @@
                     Environment.Exit(0);
                     break;
                 default:
+                  
                     Console.WriteLine("Opção inválida. Tente novamente.");
                     break;
+
             }
         }
     }

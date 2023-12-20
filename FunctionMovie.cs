@@ -2,42 +2,59 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 class FunctionMovie
 {
     public static List<Movie> acervo = new List<Movie>();
     public static void Listar()
     {
+        
         if (acervo.Count == 0)
         {
             Console.WriteLine("Nenhum filme encontrado.");
             return;
         }
-
+        Console.WriteLine("");
         Console.WriteLine("Lista de Filmes:");
+        Console.WriteLine("");
         foreach (var f in acervo)
         {
-            Console.WriteLine($"{f.Titulo} - {f.Genero} - {f.Ano} - Avaliação: {f.Avaliacao}");
+            Console.WriteLine($"Filme : {f.Titulo} - Gênero: {f.Genero} - Ano: {f.Ano} - Avaliação: {f.Avaliacao}");
+            Console.WriteLine("");
         }
     }
     public static void Cadastrar()
     {
         Movie novoFilme = new Movie();
 
-        Console.Write("Título: ");
-        novoFilme.Titulo = Console.ReadLine().Trim();
+        do
+        {
+            Console.WriteLine("");
+            Console.Write("Título: ");
+            string filme = Console.ReadLine();
+            if (!string.IsNullOrEmpty(filme))
+            {
+                novoFilme.Titulo = filme;
+                break;
+
+            }
+
+            Console.WriteLine("Digite título válido.");
+
+        } while (true);
 
         do
         {
             Console.Write("Gênero: ");
             string genero = Console.ReadLine();
 
-            if (!string.IsNullOrWhiteSpace(genero) && !genero.Any(char.IsDigit))
+            if (!string.IsNullOrEmpty(genero) && !genero.Any(char.IsDigit))
             {
                 novoFilme.Genero = genero;
                 break;
             }
-            Console.WriteLine("Digite nome válido.");
+            Console.WriteLine("Digite gênero válido.");
         } while (true);
 
 
@@ -69,8 +86,11 @@ class FunctionMovie
 
         acervo.Add(novoFilme);
         Console.WriteLine("");
+        Console.WriteLine($"Filme : {novoFilme.Titulo} - Gênero: {novoFilme.Genero} - Ano: {novoFilme.Ano} - Avaliação: {novoFilme.Avaliacao}");
+        Console.WriteLine("");
         Console.WriteLine("Filme adicionado com sucesso!");
         Console.WriteLine("");
+          
     }
     public static void Atualizar()
     {
@@ -85,41 +105,54 @@ class FunctionMovie
             return;
         }
 
-        Console.Write("Novo título (ou Enter para manter o mesmo): ");
+        Console.WriteLine("");
+
+        Console.Write($"Título atual ({filme.Titulo}) (ou Enter para manter o mesmo): ");
         string novoTitulo = Console.ReadLine();
         if (!string.IsNullOrWhiteSpace(novoTitulo))
         {
             filme.Titulo = novoTitulo;
         }
 
-        Console.Write("Novo gênero (ou Enter para manter o mesmo): ");
-        string novoGenero = Console.ReadLine();
-        if (!string.IsNullOrWhiteSpace(novoGenero))
-        {
-            filme.Genero = novoGenero;
-        }
+        Console.WriteLine("");
 
-        Console.Write("Novo ano (ou Enter para manter o mesmo): ");
-        string novoAnoStr = Console.ReadLine();
-        if (!string.IsNullOrWhiteSpace(novoAnoStr))
+        do
         {
-            int novoAno;
-            if (int.TryParse(novoAnoStr, out novoAno))
-            {
-                filme.Ano = novoAno;
-            }
-            else
-            {
-                Console.WriteLine("Ano inválido. Mantendo o ano atual.");
-            }
-        }
+            Console.Write($"Gênero atual ({filme.Genero}) (ou Enter para manter o mesmo): ");
+            string novoGenero = Console.ReadLine();
 
-        Console.Write("Nova avaliação (ou Enter para manter a mesma): ");
-        string novaAvaliacaoStr = Console.ReadLine();
-        if (!string.IsNullOrWhiteSpace(novaAvaliacaoStr))
+            if ( !novoGenero.Any(char.IsDigit))
+            {
+                filme.Genero = novoGenero;
+                break;
+            }
+            Console.WriteLine("Digite gênero válido.");
+        } while (true);
+
+        Console.WriteLine("");
+
+        Console.Write($"Ano atual ({filme.Ano}) (ou Enter para manter a mesma): ");
+        do
         {
-            double novaAvaliacao;
-            if (double.TryParse(novaAvaliacaoStr, out novaAvaliacao))
+            Console.Write("Ano: ");
+
+            if (int.TryParse(Console.ReadLine()?.Trim(), out int ano) && ano >= 1930 && ano < 2024)
+            {
+                filme.Ano = ano;
+                break;
+            }
+
+            Console.WriteLine("Digite um ano válido entre 1930 e 2023.");
+
+        } while (true);
+
+        Console.WriteLine("");
+
+        Console.Write($"Nova avaliação (ou Enter para manter a mesma): ");
+        string novaAvaliacaoI = Console.ReadLine();
+        if (!string.IsNullOrWhiteSpace(novaAvaliacaoI))
+        {
+            if (double.TryParse(novaAvaliacaoI, out double novaAvaliacao) && novaAvaliacao >= 0 && novaAvaliacao <= 10)
             {
                 filme.Avaliacao = novaAvaliacao;
             }
@@ -129,7 +162,11 @@ class FunctionMovie
             }
         }
 
+        Console.WriteLine("");
+        Console.WriteLine($"Filme: {filme.Titulo} - Gênero {filme.Genero} - Ano: {filme.Ano} - Avaliação: {filme.Avaliacao}");
+        Console.WriteLine();
         Console.WriteLine("Filme atualizado com sucesso!");
+
     }
     public static void Deletar()
     {
@@ -160,7 +197,7 @@ class FunctionMovie
             return;
         }
 
-        Console.WriteLine($"Filme encontrado: {movie.Titulo} - {movie.Genero} - {movie.Ano} - Avaliação: {movie.Avaliacao}");
+        Console.WriteLine($"Filme encontrado: {movie.Titulo} - Gênero: {movie.Genero} - Ano: {movie.Ano} - Avaliação: {movie.Avaliacao}");
     }
 }
 
