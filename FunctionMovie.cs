@@ -94,6 +94,24 @@ class FunctionMovie
     }
     public static void Atualizar()
     {
+  
+        if (acervo.Count == 0)
+
+        {
+            Console.WriteLine("Nenhum filme encontrado.");
+            Console.WriteLine();
+            return;
+        }
+        Console.WriteLine("");
+        Console.Write("Lista de filmes para atualizar. ");
+        Console.WriteLine("");
+        foreach (var f in acervo)
+        {
+            Console.WriteLine($"Filme : {f.Titulo} - Gênero: {f.Genero} - Ano: {f.Ano} - Avaliação: {f.Avaliacao}");
+            Console.WriteLine("");
+        }
+
+
         Console.Write("Digite o título do filme que deseja atualizar: ");
         string titulo = Console.ReadLine();
 
@@ -131,20 +149,20 @@ class FunctionMovie
 
         Console.WriteLine("");
 
-        Console.Write($"Ano atual ({filme.Ano}) (ou Enter para manter a mesma): ");
-        do
+        Console.Write($"Novo ano ({filme.Ano}) (ou Enter para manter a mesma): ");
+        string novoA = Console.ReadLine();
+        if (!string.IsNullOrWhiteSpace(novoA))
         {
-            Console.Write("Ano: ");
-
-            if (int.TryParse(Console.ReadLine()?.Trim(), out int ano) && ano >= 1930 && ano < 2024)
+            if (int.TryParse(novoA, out int novoAno) && novoAno >= 1930 && novoAno <= 2023)
             {
-                filme.Ano = ano;
-                break;
+                filme.Ano = novoAno;
             }
+            else
+            {
+                Console.WriteLine("Ano inválido. Mantendo o ano atual.");
+            }
+        }
 
-            Console.WriteLine("Digite um ano válido entre 1930 e 2023.");
-
-        } while (true);
 
         Console.WriteLine("");
 
@@ -170,6 +188,23 @@ class FunctionMovie
     }
     public static void Deletar()
     {
+
+        if (acervo.Count == 0)
+
+        {
+            Console.WriteLine("Nenhum filme encontrado.");
+            Console.WriteLine();
+            return;
+        }
+        Console.WriteLine("");
+        Console.Write("Lista de filmes para deletar. ");
+        Console.WriteLine("");
+        foreach (var f in acervo)
+        {
+            Console.WriteLine($"Filme : {f.Titulo} - Gênero: {f.Genero} - Ano: {f.Ano} - Avaliação: {f.Avaliacao}");
+            Console.WriteLine("");
+        }
+
         Console.Write("Digite o título do filme que deseja deletar: ");
         string titulo = Console.ReadLine();
 
